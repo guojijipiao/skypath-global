@@ -56,6 +56,6 @@ vercel
 
 ## 联系
 
-- 微信：yourwechatid
-- WhatsApp：+1 234 567 890
-- Email：service@example.com
+- 微信：TJJP0511
+- WhatsApp：+86 13051688850 
+- Emailwyc0511@126.com
