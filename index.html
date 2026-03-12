@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyPath Global - 天航国际 | 国际机票专家</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0A1628;
+            --primary-light: #132238;
+            --primary-lighter: #1A2D47;
+            --accent: #00D4AA;
+            --accent-hover: #00F5C4;
+            --accent-dark: #00A080;
+            --gold: #C9A962;
+            --gold-light: #E8D5A3;
+            --gold-dark: #9A7B3A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #8B9CB3;
+            --text-muted: #5A6A7E;
+            --border: #1E3A5F;
+            --border-light: rgba(255, 255, 255, 0.08);
+            --success: #22C55E;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --glass-bg: rgba(19, 34, 56, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 212, 170, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(201, 169, 98, 0.1), transparent),
+                radial-gradient(ellipse 50% 30% at 10% 80%, rgba(0, 212, 170, 0.08), transparent);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(10, 22, 40, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .logo-text span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            padding: 10px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: var(--primary-light);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .phone {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--accent-hover), var(--accent));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 212, 170, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--primary);
+        }
+
+        .btn-gold:hover {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(201, 169, 98, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            padding: 120px 48px 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 48px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--accent);
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease forwards;
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 0.6s ease forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        /* Search Box */
+        .search-container {
+            width: 100%;
+            max-width: 1100px;
+            animation: fadeInUp 0.6s ease forwards;
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+
+        .search-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+        }
+
+        .search-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .search-tab {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .search-tab.active {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr auto;
+            gap: 16px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 14px 16px;
+            background: var(--primary-light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-group .icon {
+            position: relative;
+        }
+
+        .form-group .icon::before {
+            content: '';
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%235A6A7E'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z'/%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 11a3 3 0 11-6 0 3 3 0 016 0z'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .swap-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-lighter);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            align-self: center;
+        }
+
+        .swap-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .swap-btn:hover svg {
+            stroke: var(--primary);
+        }
+
+        .search-btn {
+            padding: 14px 40px;
+            height: 50px;
+            font-size: 15px;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 96px 48px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Flight Results */
+        .flight-results {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-light) 100%);
+        }
+
+        .flight-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 16px;
+            display: grid;
+            grid-template-columns: 180px 1fr 180px;
+            gap: 24px;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .flight-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent);
+        }
+
+        .airline-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .airline-logo {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--primary);
+        }
+
+        .airline-name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .flight-times {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .time-block {
+            text-align: center;
+        }
+
+        .time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .airport {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .flight-duration {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .duration-line {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+            position: relative;
+        }
+
+        .duration-line::before,
+        .duration-line::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            top: -3px;
+        }
+
+        .duration-line::before { left: 0; }
+        .duration-line::after { right: 0; background: var(--gold); }
+
+        .duration {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .stops {
+            font-size: 12px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .price-block {
+            text-align: right;
+        }
+
+        .price-original {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--danger);
+        }
+
+        .price-note {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Airlines Section */
+        .airlines-section {
+            background: var(--primary);
+        }
+
+        .airlines-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+        }
+
+        .airline-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .airline-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 32px rgba(0, 212, 170, 0.15);
+        }
+
+        .airline-card .logo {
+            width: 56px;
+            height: 56px;
+            background: white;
+            border-radius: 12px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--primary);
+        }
+
+        .airline-card h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .airline-services {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .service-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-lighter);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        /* Visa Section */
+        .visa-section {
+            background: linear-gradient(180deg, var(--primary-light) 0%, var(--primary) 100%);
+        }
+
+        .visa-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .visa-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .visa-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--gold);
+            box-shadow: 0 12px 32px rgba(201, 169, 98, 0.15);
+        }
+
+        .country-flag {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .visa-card h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .visa-type {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .visa-info {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .visa-info-item {
+            text-align: center;
+        }
+
+        .visa-info-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .visa-info-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        /* Enterprise Section */
+        .enterprise-section {
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enterprise-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .enterprise-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .enterprise-text h2 {
+            font-size: 40px;
+            margin-bottom: 24px;
+        }
+
+        .enterprise-text h2 span {
+            color: var(--gold);
+        }
+
+        .enterprise-text p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .enterprise-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .enterprise-form {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--gold);
+            border-radius: 24px;
+            padding: 40px;
+        }
+
+        .enterprise-form h3 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group textarea {
+            padding: 14px 16px;
+            background: var(--primary-light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            margin-top: 8px;
+        }
+
+        /* Services Section */
+        .services-section {
+            background: var(--primary-light);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 16px 48px rgba(0, 212, 170, 0.2);
+        }
+
+        .service-icon-large {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 16px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .service-card h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Customer Service */
+        .customer-service-section {
+            background: var(--primary);
+        }
+
+        .cs-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+        }
+
+        .cs-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .cs-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .cs-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--primary-lighter);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .cs-card h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .cs-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .online-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(34, 197, 94, 0.1);
+            border-radius: 100px;
+            font-size: 12px;
+            color: var(--success);
+        }
+
+        .online-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-light);
+            border-top: 1px solid var(--border);
+            padding: 64px 48px 32px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .footer-column h5 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Floating Chat Button */
+        .floating-chat {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 999;
+        }
+
+        .chat-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 24px rgba(0, 212, 170, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .chat-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 32px rgba(0, 212, 170, 0.5);
+        }
+
+        .chat-panel {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 380px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .chat-panel.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .chat-header h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .close-chat {
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .close-chat:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .chat-messages {
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+        }
+
+        .message {
+            padding: 12px 16px;
+            background: var(--primary);
+            border-radius: 12px;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .message.bot {
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.user {
+            background: var(--accent);
+            color: var(--primary);
+            border-bottom-right-radius: 4px;
+            margin-left: auto;
+            max-width: 80%;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            background: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .chat-input button {
+            padding: 12px 20px;
+            background: var(--accent);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .chat-input button:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1199px) {
+            .search-form {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .flight-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .airline-info, .flight-times, .price-block {
+                justify-content: center;
+            }
+
+            .airlines-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .visa-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .enterprise-content {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cs-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 767px) {
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 20px 60px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .swap-btn {
+                display: none;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .airlines-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .visa-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .enterprise-features {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .chat-panel {
+                width: calc(100vw - 32px);
+                right: -8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">
+            <div class="logo-icon">✈</div>
+            <div class="logo-text">Sky<span>Path</span></div>
+        </a>
+        <div class="nav-links">
+            <a href="#flights" class="nav-link">航班搜索</a>
+            <a href="#airlines" class="nav-link">航司服务</a>
+            <a href="#visa" class="nav-link">签证查询</a>
+            <a href="#enterprise" class="nav-link">企业服务</a>
+            <a href="#services" class="nav-link">更多服务</a>
+        </div>
+        <div class="nav-right">
+            <div class="phone">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+                400-888-8888
+            </div>
+            <button class="btn btn-outline">登录</button>
+            <button class="btn btn-primary">注册</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span>7×24小时全球客服</span>
+            </div>
+            <h1>探索世界，<span>从现在开始</span></h1>
+            <p>聚合全球航司资源，一站式比价、预订、选座、值机，助您轻松规划每一次旅程</p>
+        </div>
+
+        <div class="search-container">
+            <div class="search-box">
+                <div class="search-tabs">
+                    <button class="search-tab active">单程</button>
+                    <button class="search-tab">往返</button>
+                    <button class="search-tab">多程</button>
+                </div>
+                <form class="search-form">
+                    <div class="form-group">
+                        <label>出发城市</label>
+                        <input type="text" placeholder="例如：上海" value="上海">
+                    </div>
+                    <div class="swap-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 16V4M7 4L3 8M7 4l4 4M17 8v12M17 20l4-4M17 20l-4-4"/>
+                        </svg>
+                    </div>
+                    <div class="form-group">
+                        <label>目的城市</label>
+                        <input type="text" placeholder="例如：东京">
+                    </div>
+                    <div class="form-group">
+                        <label>出发日期</label>
+                        <input type="date" value="2026-04-01">
+                    </div>
+                    <div class="form-group">
+                        <label>乘客</label>
+                        <select>
+                            <option>1成人</option>
+                            <option>2成人</option>
+                            <option>3成人</option>
+                            <option>4成人</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary search-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        搜索
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flight Results -->
+    <section class="flight-results" id="flights">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2>精选低价航班</h2>
+                <p>实时聚合全网价格，为您筛选性价比最高的航线</p>
+            </div>
+
+            <div class="flight-card animate-on-scroll">
+                <div class="airline-info">
+                    <div class="airline-logo">CA</div>
+                    <div class="airline-name">中国国航</div>
+                </div>
+                <div class="flight-times">
+                    <div class="time-block">
+                        <div class="time">08:30</div>
+                        <div class="airport">PVG 上海</div>
+                    </div>
+                    <div class="flight-duration">
+                        <div class="duration-line"></div>
+                        <div class="duration">2h 35m</div>
+                        <div class="stops">直飞</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time">11:05</div>
+                        <div class="airport">NRT 东京</div>
+                    </div>
+                </div>
+                <div class="price-block">
+                    <div class="price-original">¥3,280</div>
+                    <div class="price">¥1,850</div>
+                    <div class="price-note">含税含保险</div>
+                </div>
+            </div>
+
+            <div class="flight-card animate-on-scroll">
+                <div class="airline-info">
+                    <div class="airline-logo">NH</div>
+                    <div class="airline-name">全日空</div>
+                </div>
+                <div class="flight-times">
+                    <div class="time-block">
+                        <div class="time">10:15</div>
+                        <div class="airport">PVG 上海</div>
+                    </div>
+                    <div class="flight-duration">
+                        <div class="duration-line"></div>
+                        <div class="duration">2h 45m</div>
+                        <div class="stops">直飞</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time">13:00</div>
+                        <div class="airport">NRT 东京</div>
+                    </div>
+                </div>
+                <div class="price-block">
+                    <div class="price-original">¥3,580</div>
+                    <div class="price">¥2,120</div>
+                    <div class="price-note">含税含保险</div>
+                </div>
+            </div>
+
+            <div class="flight-card animate-on-scroll">
+                <div class="airline-info">
+                    <div class="airline-logo">MU</div>
+                    <div class="airline-name">东方航空</div>
+                </div>
+                <div class="flight-times">
+                    <div class="time-block">
+                        <div class="time">14:30</div>
+                        <div class="airport">PVG 上海</div>
+                    </div>
+                    <div class="flight-duration">
+                        <div class="duration-line"></div>
+                        <div class="duration">3h 10m</div>
+                        <div class="stops">经停</div>
+                    </div>
+                    <div class="time-block">
+                        <div class="time">18:40</div>
+                        <div class="airport">LAX 洛杉矶</div>
+                    </div>
+                </div>
+                <div class="price-block">
+                    <div class="price-original">¥8,800</div>
+                    <div class="price">¥4,980</div>
+                    <div class="price-note">含税含保险</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Airlines Section -->
+    <section class="airlines-section" id="airlines">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2>全球航司服务</h2>
+                <p>50+主流航司官方合作，选座、值机、行李一站式服务</p>
+            </div>
+
+            <div class="airlines-grid">
+                <div class="airline-card animate-on-scroll">
+                    <div class="logo">AA</div>
+                    <h4>美国航空</h4>
+                    <div class="airline-services">
+                        <div class="service-icon" title="选座">💺</div>
+                        <div class="service-icon" title="值机">📋</div>
+                        <div class="service-icon" title="行李">🧳</div>
+                    </div>
+                </div>
+                <div class="airline-card animate-on-scroll">
+                    <div class="logo">UA</div>
+                    <h4>美联航</h4>
+                    <div class="airline-services">
+                        <div class="service-icon" title="选座">💺</div>
+                        <div class="service-icon" title="值机">📋</div>
+                        <div class="service-icon" title="行李">🧳</div>
+                    </div>
+                </div>
+                <div class="airline-card animate-on-scroll">
+                    <div class="logo">DL</div>
+                    <h4>达美航空</h4>
+                    <div class="airline-services">
+                        <div class="service-icon" title="选座">💺</div>
+                        <div class="service-icon" title="值机">📋</div>
+                        <div class="service-icon" title="行李">🧳</div>
+                    </div>
+                </div>
+                <div class="airline-card animate-on-scroll">
+                    <div class="logo">BA</div>
+                    <h4>英国航空</h4>
+                    <div class="airline-services">
+                        <div class="service-icon" title="选座">💺</div>
+                        <div class="service-icon" title="值机">📋</div>
+                        <div class="service-icon" title="行李">🧳</div>
+                    </div>
+                </div>
+                <div class="airline-card animate-on-scroll">
+                    <div class="logo">LH</div>
+                    <h4>汉莎航空</h4>
+                    <div class="airline-services">
+                        <div class="service-icon" title="选座">💺</div>
+                        <div class="service-icon" title="值机">📋</div>
+                        <div class="service-icon" title="行李">🧳</div>
+                    </div>
+                </div>
+                <div class="airline-card animate-on-scroll">
+                    <div class="logo">AF</div>
+                    <h4>法航</h4>
+                    <div class="airline-services">
+                        <div class="service-icon" title="选座">💺</div>
+                        <div class="service-icon" title="值机">📋</div>
+                        <div class="service-icon" title="行李">🧳</div>
+                    </div>
+                </div>
+                <div class="airline-card animate-on-scroll">
+                    <div class="logo">EK</div>
+                    <h4>阿联酋航</h4>
+                    <div class="airline-services">
+                        <div class="service-icon" title="选座">💺</div>
+                        <div class="service-icon" title="值机">📋</div>
+                        <div class="service-icon" title="行李">🧳</div>
+                    </div>
+                </div>
+                <div class="airline-card animate-on-scroll">
+                    <div class="logo">SQ</div>
+                    <h4>新加坡航</h4>
+                    <div class="airline-services">
+                        <div class="service-icon" title="选座">💺</div>
+                        <div class="service-icon" title="值机">📋</div>
+                        <div class="service-icon" title="行李">🧳</div>
+                    </div>
+                </div>
+                <div class="airline-card animate-on-scroll">
+                    <div class="logo">CX</div>
+                    <h4>国泰航空</h4>
+                    <div class="airline-services">
+                        <div class="service-icon" title="选座">💺</div>
+                        <div class="service-icon" title="值机">📋</div>
+                        <div class="service-icon" title="行李">🧳</div>
+                    </div>
+                </div>
+                <div class="airline-card animate-on-scroll">
+                    <div class="logo">JL</div>
+                    <h4>日本航空</h4>
+                    <div class="airline-services">
+                        <div class="service-icon" title="选座">💺</div>
+                        <div class="service-icon" title="值机">📋</div>
+                        <div class="service-icon" title="行李">🧳</div>
+                    </div>
+                </div>
+                <div class="airline-card animate-on-scroll">
+                    <div class="logo">QF</div>
+                    <h4>澳洲航空</h4>
+                    <div class="airline-services">
+                        <div class="service-icon" title="选座">💺</div>
+                        <div class="service-icon" title="值机">📋</div>
+                        <div class="service-icon" title="行李">🧳</div>
+                    </div>
+                </div>
+                <div class="airline-card animate-on-scroll">
+                    <div class="logo">+</div>
+                    <h4>更多航司</h4>
+                    <div class="airline-services">
+                        <div class="service-icon" title="选座">💺</div>
+                        <div class="service-icon" title="值机">📋</div>
+                        <div class="service-icon" title="行李">🧳</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visa Section -->
+    <section class="visa-section" id="visa">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2>全球签证查询</h2>
+                <p>200+国家/地区签证政策实时更新，一键咨询办理</p>
+            </div>
+
+            <div class="visa-grid">
+                <div class="visa-card animate-on-scroll">
+                    <div class="country-flag">🇯🇵</div>
+                    <h4>日本</h4>
+                    <div class="visa-type">旅游签证 / 商务签证</div>
+                    <div class="visa-info">
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">办理时长</div>
+                            <div class="visa-info-value">5-7天</div>
+                        </div>
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">参考费用</div>
+                            <div class="visa-info-value">¥399起</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visa-card animate-on-scroll">
+                    <div class="country-flag">🇺🇸</div>
+                    <h4>美国</h4>
+                    <div class="visa-type">旅游签证 / 商务签证</div>
+                    <div class="visa-info">
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">办理时长</div>
+                            <div class="visa-info-value">2-3周</div>
+                        </div>
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">参考费用</div>
+                            <div class="visa-info-value">¥1600起</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visa-card animate-on-scroll">
+                    <div class="country-flag">🇬🇧</div>
+                    <h4>英国</h4>
+                    <div class="visa-type">旅游签证 / 商务签证</div>
+                    <div class="visa-info">
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">办理时长</div>
+                            <div class="visa-info-value">2-3周</div>
+                        </div>
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">参考费用</div>
+                            <div class="visa-info-value">¥1200起</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visa-card animate-on-scroll">
+                    <div class="country-flag">🇦🇺</div>
+                    <h4>澳大利亚</h4>
+                    <div class="visa-type">旅游签证 / 商务签证</div>
+                    <div class="visa-info">
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">办理时长</div>
+                            <div class="visa-info-value">1-2周</div>
+                        </div>
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">参考费用</div>
+                            <div class="visa-info-value">¥800起</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visa-card animate-on-scroll">
+                    <div class="country-flag">🇫🇷</div>
+                    <h4>法国</h4>
+                    <div class="visa-type">申根签证</div>
+                    <div class="visa-info">
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">办理时长</div>
+                            <div class="visa-info-value">7-10天</div>
+                        </div>
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">参考费用</div>
+                            <div class="visa-info-value">¥700起</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visa-card animate-on-scroll">
+                    <div class="country-flag">🇩🇪</div>
+                    <h4>德国</h4>
+                    <div class="visa-type">申根签证</div>
+                    <div class="visa-info">
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">办理时长</div>
+                            <div class="visa-info-value">7-10天</div>
+                        </div>
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">参考费用</div>
+                            <div class="visa-info-value">¥700起</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visa-card animate-on-scroll">
+                    <div class="country-flag">🇹🇭</div>
+                    <h4>泰国</h4>
+                    <div class="visa-type">落地签 / 电子签</div>
+                    <div class="visa-info">
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">办理时长</div>
+                            <div class="visa-info-value">1-3天</div>
+                        </div>
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">参考费用</div>
+                            <div class="visa-info-value">¥299起</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visa-card animate-on-scroll">
+                    <div class="country-flag">🇸🇬</div>
+                    <h4>新加坡</h4>
+                    <div class="visa-type">旅游签证</div>
+                    <div class="visa-info">
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">办理时长</div>
+                            <div class="visa-info-value">3-5天</div>
+                        </div>
+                        <div class="visa-info-item">
+                            <div class="visa-info-label">参考费用</div>
+                            <div class="visa-info-value">¥300起</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enterprise Section -->
+    <section class="enterprise-section" id="enterprise">
+        <div class="container">
+            <div class="enterprise-content">
+                <div class="enterprise-text animate-on-scroll">
+                    <h2>企业差旅<span>专属服务</span></h2>
+                    <p>为您的企业提供一站式差旅管理解决方案，降低成本、提升效率，让每一次出行都物超所值</p>
+                    <div class="enterprise-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">💼</div>
+                            <span class="feature-text">企业账户管理</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">👥</div>
+                            <span class="feature-text">团票预订</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <span class="feature-text">差旅报告</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">💳</div>
+                            <span class="feature-text">月结付款</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⭐</div>
+                            <span class="feature-text">专属客服</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎫</div>
+                            <span class="feature-text">积分返利</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="enterprise-form animate-on-scroll">
+                    <h3>申请企业合作</h3>
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>企业名称</label>
+                                <input type="text" placeholder="请输入企业名称">
+                            </div>
+                            <div class="form-group">
+                                <label>联系人</label>
+                                <input type="text" placeholder="请输入联系人姓名">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>联系电话</label>
+                                <input type="tel" placeholder="请输入联系电话">
+                            </div>
+                            <div class="form-group">
+                                <label>邮箱</label>
+                                <input type="email" placeholder="请输入邮箱">
+                            </div>
+                        </div>
+                        <div class="form-group full">
+                            <label>需求类型</label>
+                            <select>
+                                <option>企业差旅管理</option>
+                                <option>团票预订</option>
+                                <option>定制服务</option>
+                                <option>其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group full">
+                            <label>补充说明</label>
+                            <textarea placeholder="请描述您的具体需求..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-gold submit-btn">提交申请</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2>更多专业服务</h2>
+                <p>从预订到出行，我们为您提供全流程的专业支持</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon-large">🛡️</div>
+                    <h4>旅行保险</h4>
+                    <p>航班延误、行李丢失、医疗保障，一站式投保安心出行</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon-large">🚗</div>
+                    <h4>机场接送</h4>
+                    <p>全球100+城市专车接送，尊享舒适出行体验</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon-large">🏨</div>
+                    <h4>酒店预订</h4>
+                    <p>全球百万酒店资源，超值价格保障</p>
+                </div>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon-large">🎁</div>
+                    <h4>定制旅游</h4>
+                    <p>私人定制行程，打造专属您的独特旅程</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Service -->
+    <section class="customer-service-section">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2>人工客服</h2>
+                <p>7×24小时专业团队，为您解答所有出行疑问</p>
+            </div>
+
+            <div class="cs-content">
+                <div class="cs-card animate-on-scroll">
+                    <div class="cs-icon">💬</div>
+                    <h4>在线客服</h4>
+                    <p>点击右下角图标，即刻与客服人员沟通</p>
+                    <div class="online-status">在线</div>
+                </div>
+                <div class="cs-card animate-on-scroll">
+                    <div class="cs-icon">📞</div>
+                    <h4>电话热线</h4>
+                    <p>400-888-8888</p>
+                    <p style="font-size: 12px; color: var(--text-muted);">7×24小时服务</p>
+                </div>
+                <div class="cs-card animate-on-scroll">
+                    <div class="cs-icon">📱</div>
+                    <h4>微信客服</h4>
+                    <p>扫码添加微信，随时随地咨询</p>
+                    <button class="btn btn-outline" style="margin-top: 12px;">查看二维码</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">✈</div>
+                        <div class="logo-text">Sky<span>Path</span></div>
+                    </a>
+                    <p>天航国际 - 您的全球机票专家<br>聚合全网资源，一站式服务</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">微</a>
+                        <a href="#" class="social-link">博</a>
+                        <a href="#" class="social-link">信</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h5>服务产品</h5>
+                    <ul>
+                        <li><a href="#">航班搜索</a></li>
+                        <li><a href="#">航班比价</a></li>
+                        <li><a href="#">选座值机</a></li>
+                        <li><a href="#">签证服务</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h5>企业服务</h5>
+                    <ul>
+                        <li><a href="#">企业账户</a></li>
+                        <li><a href="#">团票预订</a></li>
+                        <li><a href="#">差旅管理</a></li>
+                        <li><a href="#">定制方案</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h5>帮助中心</h5>
+                    <ul>
+                        <li><a href="#">常见问题</a></li>
+                        <li><a href="#">退改政策</a></li>
+                        <li><a href="#">行李规定</a></li>
+                        <li><a href="#">联系方式</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h5>关于我们</h5>
+                    <ul>
+                        <li><a href="#">公司介绍</a></li>
+                        <li><a href="#">合作航司</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">服务条款</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SkyPath Global. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">营业执照</a>
+                    <a href="#">ICP备案</a>
+                    <a href="#">支付方式</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Chat -->
+    <div class="floating-chat">
+        <div class="chat-panel" id="chatPanel">
+            <div class="chat-header">
+                <h4>在线客服</h4>
+                <button class="close-chat" onclick="toggleChat()">✕</button>
+            </div>
+            <div class="chat-messages">
+                <div class="message bot">您好！欢迎咨询SkyPath Global，请问有什么可以帮您？</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="请输入您的问题..." id="chatInput">
+                <button onclick="sendMessage()">发送</button>
+            </div>
+        </div>
+        <button class="chat-btn" onclick="toggleChat()">💬</button>
+    </div>
+
+    <script>
+        // Search tab switching
+        const searchTabs = document.querySelectorAll('.search-tab');
+        searchTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                searchTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Floating chat toggle
+        function toggleChat() {
+            const panel = document.getElementById('chatPanel');
+            panel.classList.toggle('active');
+        }
+
+        // Send message
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (message) {
+                const messages = document.querySelector('.chat-messages');
+                const userMsg = document.createElement('div');
+                userMsg.className = 'message user';
+                userMsg.textContent = message;
+                messages.appendChild(userMsg);
+                input.value = '';
+                messages.scrollTop = messages.scrollHeight;
+
+                // Simulate bot response
+                setTimeout(() => {
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'message bot';
+                    botMsg.textContent = '感谢您的留言！我们的客服人员将尽快与您联系。请保持电话畅通。';
+                    messages.appendChild(botMsg);
+                    messages.scrollTop = messages.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        // Enter key to send
+        document.getElementById('chatInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('感谢您的提交！我们将尽快与您联系。');
+        });
+
+        // Enterprise form submission
+        document.querySelector('.enterprise-form form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('企业申请已提交，我们的客户经理将在24小时内与您联系！');
+        });
+    </script>
+</body>
+</html>
